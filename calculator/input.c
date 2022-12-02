@@ -40,7 +40,7 @@ struct user_input* get_user_input (struct user_input *head)
 
     while ((c=getchar()) != EOF && c != '\n')
     {
-        if (c == ' ' && c == '\n' && c == '\t')
+        if (c == ' ' || c == '\n' || c == '\t')
             continue;
         
         _append(&head, c);
