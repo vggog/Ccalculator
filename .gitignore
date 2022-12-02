@@ -1,0 +1,6 @@
+cmake_install.cmake
+calc.h.gch
+CMakeCache.txt
+CMakeFiles
+calc
+Makefile
