@@ -10,8 +10,6 @@ struct char_of_math_expression
 struct math_expression
 {
     int len;
-    int number_left_brackets;
-    int number_right_brackets;
     struct char_of_math_expression *head;
     struct char_of_math_expression *end;
 };

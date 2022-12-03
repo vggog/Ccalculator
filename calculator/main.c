@@ -9,16 +9,17 @@ int main ()
     struct math_expression* math_expression = create_math_expression();
     save_user_input(math_expression);
     
-    printf("Len: %d\n", math_expression->len);
-    if (validate_math_expression(math_expression) == -1)
-    {
-        printf("Good!\n");
-    }
-    else
-    {
-        printf("Baad\n");
-    }
-    print_math_expression(math_expression);
+    int validate_status = validate_math_expression(math_expression);
 
+    if (validate_status == -2)
+    {
+        print_math_expression(math_expression);
+        printf("Error:\nWrong input.\n");
+    }
+    else if (validate_status != -1)
+    {
+        print_input_error(math_expression, validate_status);
+    }
+    
     return 0;
 }

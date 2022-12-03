@@ -18,26 +18,27 @@ void print_math_expression (struct math_expression* math_expression)
 }
 
 
-struct char_of_math_expression* _new_char (char key)
+struct char_of_math_expression* _new_char (char key, int index)
 {
     /*
     Create a new char_of_math_expression structure.
     */
     struct char_of_math_expression* node = (struct char_of_math_expression*)malloc(sizeof(struct char_of_math_expression));
     node->value = key;
+    node->index = index;
     node->next = NULL;
 
     return node;
 }
 
 
-void append_char (struct char_of_math_expression** element, char value)
+void append_char (struct char_of_math_expression** element, char value, int index)
 {
     /*
     Add char to the math expression.
     */
     struct char_of_math_expression* current = *element;
-    struct char_of_math_expression* node = _new_char(value);
+    struct char_of_math_expression* node = _new_char(value, index);
 
     if (current == NULL) 
         *element = node;

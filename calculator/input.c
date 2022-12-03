@@ -30,7 +30,7 @@ void save_user_input (struct math_expression* math_expression)
         if (_is_control_character(c))
             continue;
         
-        append_char(&head, c);
+        append_char(&head, c, i);
 
         if (!math_expression->head)
             math_expression->head = head;
@@ -39,4 +39,22 @@ void save_user_input (struct math_expression* math_expression)
     }
     
     math_expression->len = i;
+}
+
+
+void print_input_error(struct math_expression* math_expression, int error_index)
+{
+    int i;
+    printf("Error:\n");
+    print_math_expression(math_expression);
+    for (i = 0; i<math_expression->len; i++)
+    {
+        if (i == error_index)
+        {
+            printf("^");
+            continue;
+        }
+        printf("~");
+    }
+    printf("\n");
 }
