@@ -1,53 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "calc.h"
+#include "math_expression.h"
 
 
-struct user_input* _new_node (char key)
+int _is_control_character(char symbol)
 {
-    struct user_input* node = (struct user_input*)malloc(sizeof(struct user_input));
-    node->value = key;
-    node->next = NULL;
+    if (symbol == ' ' || symbol == '\n' || symbol == '\t')
+        return 1;
 
-    return node;
+    return 0;
 }
 
 
-void _append (struct user_input** head, char value)
+void save_user_input (struct math_expression* math_expression)
 {
-    struct user_input* current = *head;
-    struct user_input* node = _new_node(value);
-
-    if (current == NULL) 
-        *head = node;
-
-    else 
-    {
-        while (current->next != NULL) 
-            current = current->next;
-
-        current->next = node;
-    }
-}
-
-
-struct user_input* get_user_input (struct user_input *head)
-{
+    /*
+    Saves user input to a struct math_expression.
+    */
+    int i = 0;
     char c;
-    struct user_input *first_element = head;
+    
+    struct char_of_math_expression *head = math_expression->head;
 
     printf("Input: ");
-
+    
     while ((c=getchar()) != EOF && c != '\n')
     {
-        if (c == ' ' || c == '\n' || c == '\t')
+        if (_is_control_character(c))
             continue;
         
-        _append(&head, c);
+        append_char(&head, c);
 
-        if (!first_element)
-            first_element = head;
+        if (!math_expression->head)
+            math_expression->head = head;
+
+        i++;
     }
     
-    return first_element;
+    math_expression->len = i;
 }

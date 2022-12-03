@@ -1,35 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "calc.h"
-
-
-void print_linced_list (struct user_input *head)
-{
-    while (head)
-    {
-    	printf("%c ", head->value);
-    	head = head -> next;
-    }
-    printf("\n");
-}
+#include "math_expression.h"
 
 
 int main () 
 {
-    struct user_input *head = NULL;
-
-    struct user_input *head_user_input = get_user_input(head);
-    // print_linced_list(head_user_input);
-
-    if (validate_user_input(head_user_input) == -1)
+    struct math_expression* math_expression = create_math_expression();
+    save_user_input(math_expression);
+    
+    printf("Len: %d\n", math_expression->len);
+    if (validate_math_expression(math_expression) == -1)
     {
         printf("Good!\n");
     }
     else
     {
-        print_linced_list(head);
         printf("Baad\n");
     }
+    print_math_expression(math_expression);
 
     return 0;
 }

@@ -1,7 +1,5 @@
-struct user_input
-{
-    char value;
-    struct user_input *next;
-};
+#include "math_expression.h"
 
-struct user_input * get_user_input (struct user_input *head);
+void save_user_input (struct math_expression* math_expression);
+int validate_math_expression(struct math_expression* math_expression);
+void append_char (struct char_of_math_expression** head, char value);

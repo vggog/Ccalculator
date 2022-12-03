@@ -17,21 +17,22 @@ int _validate_char(char chapter)
 }
 
 
-int validate_user_input(struct user_input* head)
+int validate_math_expression(struct math_expression* math_expression)
 {
     /* 
     return -1 if validate success.
     return positive number validate error.
         the number returned is the position of the error in the string. 
     */
-
-    while (head)
+    struct char_of_math_expression* char_math_expression = math_expression->head;
+    
+    while (char_math_expression)
     {
-        char element = head->value;
+        char element = char_math_expression->value;
         if (!_validate_char(element))
             return 0;
 
-        head = head->next;
+        char_math_expression = char_math_expression->next;
     }
 
     return -1;
