@@ -2,7 +2,7 @@
 #include "calc.h"
 
 
-int _validate_char(char chapter)
+int _valide_char(char chapter)
 {
     switch (chapter)
     {
@@ -23,6 +23,71 @@ int _is_equal_math_brackets(int count_left_bracket, int count_right_bracket)
 }
 
 
+int _is_this_number(char chapter)
+{
+    if (chapter >= '0' && chapter <= '9')
+        return 1;
+    return 0;
+}
+
+
+int _valide_before_brackets(char chapter, char before_chapter)
+{
+    if (chapter == '(')
+    {
+        if (_is_this_number(before_chapter))
+            return 0;
+    }
+    else if (chapter == ')')
+    {
+        if (!_is_this_number(before_chapter))
+            return 0;
+    }
+
+    return 1;
+}
+
+
+int _validate_before_operators(char chapter, char before_chapter)
+{
+    if (chapter == '+' || chapter == '-' || chapter == '*' || chapter == '/')
+    {
+        if (!_is_this_number(before_chapter))
+            return 0;
+    }
+
+    return 1;
+}
+
+
+int _validate_before_operations_and_brackets(struct char_of_math_expression* struct_chapter)
+{
+    char chapter = struct_chapter->value;
+    if (struct_chapter->index == 0)
+    {
+        if (_is_this_number(chapter) || chapter == '(')
+            return 0;
+        return 1;
+    }
+    
+    struct char_of_math_expression* before_struct_char = struct_chapter->before;
+    char before_chapter = before_struct_char->value;
+
+    if (!_valide_before_brackets(chapter, before_chapter))
+        return struct_chapter->index;
+    else if (!_validate_before_operators(chapter, before_chapter))
+        return struct_chapter->index;
+
+    if (struct_chapter->next == NULL)
+    {
+        if (!_is_this_number(chapter) && chapter != ')')
+            return 1;
+    }
+
+    return 0;
+}
+
+
 int validate_math_expression(struct math_expression* math_expression)
 {
     /* 
@@ -33,20 +98,21 @@ int validate_math_expression(struct math_expression* math_expression)
     */
     int left_bracket = 0; // (
     int right_bracket = 0; // )
-    struct char_of_math_expression* char_math_expression = math_expression->head;
+    struct char_of_math_expression* chapter = math_expression->head;
     
-    while (char_math_expression)
+    while (chapter)
     {
-        char element = char_math_expression->value;
-        if (!_validate_char(element))
-            return char_math_expression->index;
-
-        if (element == '(')
+        if (!_valide_char(chapter->value))
+            return chapter->index;
+        else if (_validate_before_operations_and_brackets(chapter))
+            return chapter->index;
+        
+        if (chapter->value == '(')
             left_bracket++;
-        else if (element == ')')
+        else if (chapter->value == ')')
             right_bracket++;
 
-        char_math_expression = char_math_expression->next;
+        chapter = chapter->next;
     }
 
     if (!_is_equal_math_brackets(left_bracket, right_bracket))

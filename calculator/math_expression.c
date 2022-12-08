@@ -40,14 +40,17 @@ void append_char (struct char_of_math_expression** element, char value, int inde
     struct char_of_math_expression* current = *element;
     struct char_of_math_expression* node = _new_char(value, index);
 
-    if (current == NULL) 
+    if (current == NULL)
+    { 
         *element = node;
-
+        node->before = NULL;
+    }
     else 
     {
         while (current->next != NULL) 
             current = current->next;
-
+        
+        node->before = current;
         current->next = node;
     }
 }

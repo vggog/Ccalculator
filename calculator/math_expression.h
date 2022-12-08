@@ -5,6 +5,7 @@ struct char_of_math_expression
     char value;
     int index;
     struct char_of_math_expression *next;
+    struct char_of_math_expression *before;
 };
 
 struct math_expression
