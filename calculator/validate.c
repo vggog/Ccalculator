@@ -4,6 +4,9 @@
 
 int _valide_char(char chapter)
 {
+    /*
+    Valide char is a numbers(0-9) + - ( )
+    */
     switch (chapter)
     {
     case '0': case '1': case '2': case '3':
@@ -33,6 +36,10 @@ int _is_this_number(char chapter)
 
 int _valide_before_brackets(char chapter, char before_chapter)
 {
+    /*
+    Before left brackets must be operators, 
+    but before ritght bracket must be numbers.
+    */
     if (chapter == '(')
     {
         if (_is_this_number(before_chapter))
@@ -50,9 +57,12 @@ int _valide_before_brackets(char chapter, char before_chapter)
 
 int _validate_before_operators(char chapter, char before_chapter)
 {
+    /*
+    Before operators must be numbers or left bracket.
+    */
     if (chapter == '+' || chapter == '-' || chapter == '*' || chapter == '/')
     {
-        if (!_is_this_number(before_chapter))
+        if (!_is_this_number(before_chapter) && before_chapter != ')')
             return 0;
     }
 
@@ -60,7 +70,7 @@ int _validate_before_operators(char chapter, char before_chapter)
 }
 
 
-int _validate_before_operations_and_brackets(struct char_of_math_expression* struct_chapter)
+int _validate_before_operations_and_brackets(struct char_of_raw_math_expression* struct_chapter)
 {
     char chapter = struct_chapter->value;
     if (struct_chapter->index == 0)
@@ -70,7 +80,7 @@ int _validate_before_operations_and_brackets(struct char_of_math_expression* str
         return 1;
     }
     
-    struct char_of_math_expression* before_struct_char = struct_chapter->before;
+    struct char_of_raw_math_expression* before_struct_char = struct_chapter->before;
     char before_chapter = before_struct_char->value;
 
     if (!_valide_before_brackets(chapter, before_chapter))
@@ -88,7 +98,7 @@ int _validate_before_operations_and_brackets(struct char_of_math_expression* str
 }
 
 
-int validate_math_expression(struct math_expression* math_expression)
+int validate_math_expression(struct raw_math_expression* math_expression)
 {
     /* 
     return -1 if validate success.
@@ -98,7 +108,7 @@ int validate_math_expression(struct math_expression* math_expression)
     */
     int left_bracket = 0; // (
     int right_bracket = 0; // )
-    struct char_of_math_expression* chapter = math_expression->head;
+    struct char_of_raw_math_expression* chapter = math_expression->head;
     
     while (chapter)
     {

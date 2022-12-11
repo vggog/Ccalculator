@@ -6,6 +6,9 @@
 
 int _is_control_character(char symbol)
 {
+    /*
+    control symbol is cpase " ", tabulation "\t" and line translation "\n"
+    */
     if (symbol == ' ' || symbol == '\n' || symbol == '\t')
         return 1;
 
@@ -13,7 +16,7 @@ int _is_control_character(char symbol)
 }
 
 
-void save_user_input (struct math_expression* math_expression)
+void save_user_input (struct raw_math_expression* math_expression)
 {
     /*
     Saves user input to a struct math_expression.
@@ -21,7 +24,7 @@ void save_user_input (struct math_expression* math_expression)
     int i = 0;
     char c;
     
-    struct char_of_math_expression *head = math_expression->head;
+    struct char_of_raw_math_expression *head = math_expression->head;
 
     printf("Input: ");
     
@@ -42,12 +45,15 @@ void save_user_input (struct math_expression* math_expression)
 }
 
 
-void print_input_error(struct math_expression* math_expression, int error_index)
+void print_input_error(struct raw_math_expression* math_expression, int error_index)
 {
+    /*
+    Print raw mathematic exception with showing position of error.  
+    */ 
     int i;
     printf("Error:\n");
-    print_math_expression(math_expression);
-    for (i = 0; i<math_expression->len; i++)
+    print_raw_math_expression(math_expression);
+    for (i = 0; i < math_expression->len; i++)
     {
         if (i == error_index)
         {

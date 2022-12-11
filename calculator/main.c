@@ -6,19 +6,19 @@
 
 int main () 
 {
-    struct math_expression* math_expression = create_math_expression();
-    save_user_input(math_expression);
+    struct raw_math_expression* raw_math_expression = create_raw_math_expression();
+    save_user_input(raw_math_expression);
     
-    int validate_status = validate_math_expression(math_expression);
+    int validate_status = validate_math_expression(raw_math_expression);
 
     if (validate_status == -2)
     {
-        print_math_expression(math_expression);
+        print_raw_math_expression(raw_math_expression);
         printf("Error:\nWrong input.\n");
     }
     else if (validate_status != -1)
     {
-        print_input_error(math_expression, validate_status);
+        print_input_error(raw_math_expression, validate_status);
     }
     
     return 0;
